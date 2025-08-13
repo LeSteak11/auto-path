@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateFollowups } from "@/lib/mock-provider";
+import { generateFollowups } from "@/lib/openai-provider";
 import { IntakeData } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
 
     const intake: IntakeData = body.intake;
 
-    // Generate follow-up questions using the mock provider
-    const followups = generateFollowups(intake);
+    // Generate follow-up questions using the OpenAI provider
+    const followups = await generateFollowups(intake);
 
     return NextResponse.json(followups);
   } catch (error) {

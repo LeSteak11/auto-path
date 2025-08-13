@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generatePlan } from "@/lib/mock-provider";
+import { generatePlan } from "@/lib/openai-provider";
 import { IntakeData, FollowupAnswers } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
@@ -17,8 +17,8 @@ export async function POST(request: NextRequest) {
     const intake: IntakeData = body.intake;
     const followupAnswers: FollowupAnswers = body.followupAnswers || {};
 
-    // Generate learning plan using the mock provider
-    const plan = generatePlan(intake, followupAnswers);
+    // Generate learning plan using the OpenAI provider
+    const plan = await generatePlan(intake, followupAnswers);
 
     return NextResponse.json(plan);
   } catch (error) {

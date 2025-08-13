@@ -236,7 +236,7 @@ function IntakePage() {
                 disabled={isSubmitting}
                 className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-500/50 text-white font-medium py-3 rounded-lg transition-colors"
               >
-                                {isSubmitting ? "AI is analyzing your goals..." : "Continue"}
+                {isSubmitting ? "Generating Follow-ups..." : "Continue"}
               </button>
             </div>
           </form>
