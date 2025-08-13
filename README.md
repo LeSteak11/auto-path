@@ -1,24 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AutoPath
+
+A guided curriculum generator that takes user intake, generates dynamic follow-up questions, and creates personalized learning plans.
+
+## Stack
+
+- **Framework**: Next.js 15 (App Router) + TypeScript
+- **Styling**: Tailwind CSS
+- **Forms**: React Hook Form + Zod validation  
+- **API**: Next.js API routes with mock LLM provider
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Set up environment**:
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your configuration
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Open** [http://localhost:3000](http://localhost:3000) to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
+
+- `/src/app` - Next.js App Router pages and API routes
+- `/src/lib` - Zod schemas, types, and utilities  
+- `/src/components` - Reusable UI components
 
 ## Learn More
 
