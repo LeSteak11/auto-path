@@ -20,7 +20,128 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Print Styles for PDF Export */
+@media print {
+  @page {
+    margin: 1in;
+    size: letter;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  /* Hide all interactive elements */
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  /* Ensure good page breaks */
+  .break-inside-avoid {
+    break-inside: avoid;
+  }
+  
+  /* Improve text contrast for printing */
+  .print\:text-gray-900 {
+    color: #111827 !important;
+  }
+  
+  .print\:text-gray-700 {
+    color: #374151 !important;
+  }
+  
+  .print\:text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .print\:text-gray-500 {
+    color: #6b7280 !important;
+  }
+  
+  /* Background colors for print */
+  .print\:bg-white {
+    background-color: white !important;
+  }
+  
+  .print\:bg-gray-50 {
+    background-color: #f9fafb !important;
+  }
+  
+  .print\:bg-gray-100 {
+    background-color: #f3f4f6 !important;
+  }
+  
+  /* Border colors for print */
+  .print\:border {
+    border-width: 1px !important;
+  }
+  
+  .print\:border-gray-200 {
+    border-color: #e5e7eb !important;
+  }
+  
+  .print\:border-gray-300 {
+    border-color: #d1d5db !important;
+  }
+  
+  .print\:border-gray-400 {
+    border-color: #9ca3af !important;
+  }
+  
+  /* Remove shadows and rounded corners for clean print */
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+  
+  .print\:rounded-none {
+    border-radius: 0 !important;
+  }
+  
+  /* Color adjustments for better print visibility */
+  .print\:text-indigo-600 {
+    color: #4f46e5 !important;
+  }
+  
+  .print\:text-indigo-700 {
+    color: #4338ca !important;
+  }
+  
+  .print\:text-indigo-800 {
+    color: #3730a3 !important;
+  }
+  
+  .print\:text-red-600 {
+    color: #dc2626 !important;
+  }
+  
+  .print\:text-blue-600 {
+    color: #2563eb !important;
+  }
+  
+  .print\:text-green-600 {
+    color: #16a34a !important;
+  }
+  
+  .print\:text-amber-600 {
+    color: #d97706 !important;
+  }
+  
+  .print\:text-emerald-600 {
+    color: #059669 !important;
+  }
+  
+  .print\:bg-indigo-600 {
+    background-color: #4f46e5 !important;
+  }
+  
+  /* Remove link underlines for print */
+  .print\:no-underline {
+    text-decoration: none !important;
+  }
 }
