@@ -2,14 +2,14 @@ import { z } from "zod";
 
 // Intake Form Schema
 export const IntakeSchema = z.object({
-  goal: z.string().min(10, "Please describe your learning goal in at least 10 characters"),
-  currentLevel: z.enum(["beginner", "intermediate", "advanced"]).refine((val) => val, {
-    message: "Please select your current level",
-  }),
-  timeCommitment: z.number().min(1).max(40, "Time commitment must be between 1-40 hours per week"),
-  preferredFormat: z.array(z.enum(["video", "article", "hands-on", "documentation"])).min(1, "Select at least one format"),
-  deadline: z.string().optional(),
-  specificTopics: z.string().optional(),
+  skill: z.string().min(1, "Skill is required"),
+  targetGoal: z.string().min(10, "Please describe your target goal in at least 10 characters"),
+  timeBudget: z.number().min(1, "Time budget must be at least 1 hour per week"),
+  duration: z.number().min(1, "Duration must be at least 1 week"),
+  experienceLevel: z.enum(["Beginner", "Intermediate", "Advanced"]),
+  tools: z.string().optional(),
+  learningStyle: z.array(z.enum(["Video-first", "Step-by-step", "Project-led"])).optional(),
+  constraints: z.string().nullable().optional(),
 });
 
 // Follow-up Question Schemas

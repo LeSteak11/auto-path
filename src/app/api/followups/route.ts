@@ -1,30 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GenerateFollowupsRequestSchema } from "@/lib/schemas";
-import { MockLLMProvider } from "@/lib/mock-provider";
-
-const mockProvider = new MockLLMProvider();
+import { generateFollowups } from "@/lib/mock-provider";
+import { IntakeData } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Validate the request body
-    const parseResult = GenerateFollowupsRequestSchema.safeParse(body);
-    
-    if (!parseResult.success) {
+    // Basic validation for intake data
+    if (!body.intake || typeof body.intake !== 'object') {
       return NextResponse.json(
-        { 
-          error: "Invalid request data", 
-          details: parseResult.error.flatten() 
-        },
+        { error: "Invalid request: missing intake data" },
         { status: 400 }
       );
     }
 
-    const { intake } = parseResult.data;
+    const intake: IntakeData = body.intake;
 
     // Generate follow-up questions using the mock provider
-    const followups = await mockProvider.generateFollowups(intake);
+    const followups = generateFollowups(intake);
 
     return NextResponse.json(followups);
   } catch (error) {

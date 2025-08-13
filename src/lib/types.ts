@@ -3,36 +3,52 @@ import {
   IntakeSchema,
   FollowupQuestionSchema,
   FollowupsPayloadSchema,
-  FollowupAnswerSchema,
-  FollowupAnswersSchema,
   PlanSchema,
-  WeekSchema,
-  DaySchema,
-  TaskSchema,
-  ResourceSchema,
-  AssessmentSchema,
   GenerateFollowupsRequestSchema,
   GeneratePlanRequestSchema,
 } from "./schemas";
 
-// Intake Types
-export type IntakeData = z.infer<typeof IntakeSchema>;
+export type ExperienceLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
-// Follow-up Types
-export type FollowupQuestion = z.infer<typeof FollowupQuestionSchema>;
-export type FollowupsPayload = z.infer<typeof FollowupsPayloadSchema>;
-export type FollowupAnswer = z.infer<typeof FollowupAnswerSchema>;
-export type FollowupAnswers = z.infer<typeof FollowupAnswersSchema>;
+export type IntakeData = {
+  skill: string;
+  targetGoal: string;           // NOTE: use targetGoal (not goal)
+  timeBudget: number;           // hours per week
+  duration: number;             // weeks
+  experienceLevel: ExperienceLevel;
+  tools?: string;               // simplified as string
+  learningStyle?: Array<'Video-first' | 'Step-by-step' | 'Project-led'>;
+  constraints?: string | null;
+};
 
-// Plan Types
-export type Task = z.infer<typeof TaskSchema>;
-export type Day = z.infer<typeof DaySchema>;
-export type Week = z.infer<typeof WeekSchema>;
-export type Resource = z.infer<typeof ResourceSchema>;
-export type Assessment = z.infer<typeof AssessmentSchema>;
-export type Plan = z.infer<typeof PlanSchema>;
+export type FollowupQuestion =
+  | { id: string; prompt: string; type: 'single_select'; options: string[] }
+  | { id: string; prompt: string; type: 'multi_select'; options: string[] }
+  | { id: string; prompt: string; type: 'free_text' };
 
-// API Types
+export type FollowupsPayload = { questions: FollowupQuestion[] };
+
+// Answers keyed by question id; value can be a string or array of strings.
+export type FollowupAnswers = Record<string, string | string[]>;
+
+export type Plan = {
+  weeks: Array<{
+    week: number;
+    theme: string;
+    hours_planned: number;
+    milestones: string[];
+    days: Array<{
+      day: number;
+      time_est: number;
+      tasks: Array<{ title: string; resource?: string; deliverable?: string }>;
+    }>;
+  }>;
+  resources: Array<{ label: string; type: 'video' | 'article' | 'docs'; url: string }>;
+  assessments: Array<{ when: string; rubric: string }>;
+};
+
+// Legacy Zod-derived types for backward compatibility
+export type Task = z.infer<typeof IntakeSchema>;
 export type GenerateFollowupsRequest = z.infer<typeof GenerateFollowupsRequestSchema>;
 export type GeneratePlanRequest = z.infer<typeof GeneratePlanRequestSchema>;
 

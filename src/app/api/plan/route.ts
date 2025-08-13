@@ -1,30 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GeneratePlanRequestSchema } from "@/lib/schemas";
-import { MockLLMProvider } from "@/lib/mock-provider";
-
-const mockProvider = new MockLLMProvider();
+import { generatePlan } from "@/lib/mock-provider";
+import { IntakeData, FollowupAnswers } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Validate the request body
-    const parseResult = GeneratePlanRequestSchema.safeParse(body);
-    
-    if (!parseResult.success) {
+    // Basic validation for request data
+    if (!body.intake || typeof body.intake !== 'object') {
       return NextResponse.json(
-        { 
-          error: "Invalid request data", 
-          details: parseResult.error.flatten() 
-        },
+        { error: "Invalid request: missing intake data" },
         { status: 400 }
       );
     }
 
-    const { intake, followupAnswers } = parseResult.data;
+    const intake: IntakeData = body.intake;
+    const followupAnswers: FollowupAnswers = body.followupAnswers || {};
 
     // Generate learning plan using the mock provider
-    const plan = await mockProvider.generatePlan(intake, followupAnswers);
+    const plan = generatePlan(intake, followupAnswers);
 
     return NextResponse.json(plan);
   } catch (error) {
